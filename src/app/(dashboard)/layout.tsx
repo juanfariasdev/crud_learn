@@ -21,7 +21,7 @@ export default function Layout({
       <MobileNavigation />
 
       {/* Main Content */}
-      <div className="md:pl-64">
+      <div className="p-10 md:pl-72">
         {children}
       </div>
     </div>
