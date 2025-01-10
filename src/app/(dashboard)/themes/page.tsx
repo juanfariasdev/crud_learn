@@ -8,13 +8,21 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
+import { Theme } from '@prisma/client';
+import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import AddThemeModal from './_components/theme/addThemeModal';
 
-export default function ThemesList() {
+async function getThemes() {
+    const { themes } = await fetch('/api/themes').then((res) => res.json())
+    return themes as Theme[]
+}
 
+
+export default function ThemesList() {
+    const { data: themes } = useQuery({ queryKey: ['themes'], queryFn: getThemes })
     return (
-        <div className="space-y-6">
+        <div className="space-y-2">
             <div className="flex justify-between items-center">
                 <div>
                     <h2 className="text-3xl font-bold tracking-tight">Temas</h2>
@@ -26,43 +34,27 @@ export default function ThemesList() {
 
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Mathematics</CardTitle>
-                        <CardDescription>
-                            Basic and advanced mathematical concepts
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-sm text-muted-foreground">
-                            12 tests • Last updated 2 days ago
-                        </p>
-                    </CardContent>
-                    <CardFooter>
-                        <Link href="/themes/1">
-                            <Button
-                            >
-                                Visualizar
-                            </Button>
-                        </Link>
-                    </CardFooter>
-
-                </Card>
-
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Physics</CardTitle>
-                        <CardDescription>
-                            Fundamental physics principles and theories
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-sm text-muted-foreground">
-                            8 tests • Last updated 5 days ago
-                        </p>
-                    </CardContent>
-                </Card>
+            <div className="grid gap-5 md:grid-cols-4 lg:grid-cols-5">
+                {themes?.map((theme) => (
+                    <Card key={theme.id} className='p-0 text-center'>
+                        <CardHeader>
+                            <CardTitle>{theme.label}</CardTitle>
+                            <CardDescription>{theme.description}</CardDescription>
+                        </CardHeader>
+                        <CardContent className='flex justify-center'>
+                            {theme.photoUrl &&
+                                <img src={theme.photoUrl} alt={theme.label} className='max-h-32' />
+                            }
+                        </CardContent>
+                        <CardFooter className='w-full justify-center'>
+                            <Link href={`/themes/${theme.id}`}>
+                                <Button>
+                                    Visualizar
+                                </Button>
+                            </Link>
+                        </CardFooter>
+                    </Card>
+                ))}
             </div>
         </div>
     );
