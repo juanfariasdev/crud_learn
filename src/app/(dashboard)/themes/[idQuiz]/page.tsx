@@ -1,5 +1,4 @@
 "use client"
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
     Table,
@@ -9,10 +8,20 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
+import { Quiz } from '@prisma/client';
+import { useQuery } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
 
-export default function TestsList() {
+async function getQuizzes(idQuiz: string) {
+    const { quizzes } = await fetch(`/api/themes/${idQuiz}`).then((res) => res.json())
+    return quizzes as Quiz[]
+}
+
+export default function TestsList({ params }: { params: { idQuiz: string } }) {
+    const { idQuiz } = params
+    const { data: quizzes } = useQuery({ queryKey: [`quizzes/${idQuiz}`], queryFn: () => getQuizzes(idQuiz) })
+
     return (
         <div className="space-y-6">
             <div className="flex justify-between items-center">
@@ -31,49 +40,31 @@ export default function TestsList() {
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>Title</TableHead>
-                            <TableHead>Theme</TableHead>
-                            <TableHead>Questions</TableHead>
-                            <TableHead>Status</TableHead>
-                            <TableHead>Created</TableHead>
+                            <TableHead>Icone</TableHead>
+                            <TableHead>Titulo</TableHead>
+                            <TableHead>Dificuldade</TableHead>
+                            <TableHead>Tema</TableHead>
                             <TableHead className="text-right">Actions</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        <TableRow>
-                            <TableCell className="font-medium">
-                                Algebra Basics
-                            </TableCell>
-                            <TableCell>Mathematics</TableCell>
-                            <TableCell>15</TableCell>
-                            <TableCell>
-                                <Badge>Published</Badge>
-                            </TableCell>
-                            <TableCell>2 days ago</TableCell>
-                            <TableCell className="text-right">
-                                <Link href="/themes/1/1">
-                                    <Button variant="ghost" size="sm">
-                                        Edit
-                                    </Button>
-                                </Link>
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell className="font-medium">
-                                Newton's Laws
-                            </TableCell>
-                            <TableCell>Physics</TableCell>
-                            <TableCell>10</TableCell>
-                            <TableCell>
-                                <Badge variant="secondary">Draft</Badge>
-                            </TableCell>
-                            <TableCell>5 days ago</TableCell>
-                            <TableCell className="text-right">
-                                <Button variant="ghost" size="sm">
-                                    Edit
-                                </Button>
-                            </TableCell>
-                        </TableRow>
+                        {quizzes?.map((quiz) => (
+                            <TableRow key={quiz.id}>
+                                <TableCell>
+                                    {quiz.photoUrl && <img src={quiz.photoUrl} alt={quiz.label} className="w-8 h-8" />}
+                                </TableCell>
+                                <TableCell className="font-medium">{quiz.label}</TableCell>
+                                <TableCell>{quiz.level}</TableCell>
+                                <TableCell>{quiz.themeId}</TableCell>
+                                <TableCell className="text-right">
+                                    <Link href={`/themes/${idQuiz}/${quiz.id}`}>
+                                        <Button variant="ghost" size="sm">
+                                            Edit
+                                        </Button>
+                                    </Link>
+                                </TableCell>
+                            </TableRow>
+                        ))}
                     </TableBody>
                 </Table>
             </div>
