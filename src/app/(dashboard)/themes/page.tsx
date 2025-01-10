@@ -1,14 +1,18 @@
+"use client"
 import { Button } from '@/components/ui/button';
 import {
     Card,
     CardContent,
     CardDescription,
+    CardFooter,
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import { Plus } from 'lucide-react';
+import Link from 'next/link';
+import AddThemeModal from './_components/theme/addThemeModal';
 
 export default function ThemesList() {
+
     return (
         <div className="space-y-6">
             <div className="flex justify-between items-center">
@@ -18,13 +22,11 @@ export default function ThemesList() {
                         Gerencie os temas aqui.
                     </p>
                 </div>
-                <Button>
-                    <Plus className="mr-2 h-4 w-4" /> Adicionar Tema
-                </Button>
+                <AddThemeModal />
+
             </div>
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {/* Example Theme Cards */}
                 <Card>
                     <CardHeader>
                         <CardTitle>Mathematics</CardTitle>
@@ -37,6 +39,15 @@ export default function ThemesList() {
                             12 tests • Last updated 2 days ago
                         </p>
                     </CardContent>
+                    <CardFooter>
+                        <Link href="/themes/1">
+                            <Button
+                            >
+                                Visualizar
+                            </Button>
+                        </Link>
+                    </CardFooter>
+
                 </Card>
 
                 <Card>

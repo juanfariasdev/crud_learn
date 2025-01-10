@@ -76,7 +76,7 @@ export default function ReportsDashboard() {
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">1,234</div>
-                        <p className="text-xs text-muted-foreground">Across all tests</p>
+                        <p className="text-xs text-muted-foreground">Across all topics</p>
                     </CardContent>
                 </Card>
                 <Card>

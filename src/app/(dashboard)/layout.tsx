@@ -22,7 +22,10 @@ export default function Layout({
 
       {/* Main Content */}
       <div className="p-10 md:pl-72">
-        {children}
+        <div className="max-w-7xl mx-auto">
+          {children}
+
+        </div>
       </div>
     </div>
 

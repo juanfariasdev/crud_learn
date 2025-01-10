@@ -3,7 +3,8 @@ import { BarChart, LayoutDashboard, Library, ScrollText, Users } from 'lucide-re
 
 export const menu = [
     { label: 'Temas', icon: Library, value: 'themes' },
-    { label: 'Testes', icon: ScrollText, value: 'tests' },
+    { label: 'Quizzes', icon: LayoutDashboard, value: 'quizzes' },
+    { label: 'Tópicos', icon: ScrollText, value: 'topics' },
     { label: 'Questões', icon: LayoutDashboard, value: 'questions' },
     { label: 'Usuários', icon: Users, value: 'users' },
     { label: 'Reportes', icon: BarChart, value: 'reports' },
