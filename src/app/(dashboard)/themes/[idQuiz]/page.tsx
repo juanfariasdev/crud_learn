@@ -40,7 +40,7 @@ export default function TestsList({ params }: { params: { idQuiz: string } }) {
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>Icone</TableHead>
+                            <TableHead className='text-center'>Icone</TableHead>
                             <TableHead>Titulo</TableHead>
                             <TableHead>Dificuldade</TableHead>
                             <TableHead>Tema</TableHead>
@@ -50,7 +50,7 @@ export default function TestsList({ params }: { params: { idQuiz: string } }) {
                     <TableBody>
                         {quizzes?.map((quiz) => (
                             <TableRow key={quiz.id}>
-                                <TableCell>
+                                <TableCell className='flex justify-center'>
                                     {quiz.photoUrl && <img src={quiz.photoUrl} alt={quiz.label} className="w-8 h-8" />}
                                 </TableCell>
                                 <TableCell className="font-medium">{quiz.label}</TableCell>
