@@ -1,11 +1,21 @@
 "use client"
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
     Card,
     CardHeader,
     CardTitle
 } from '@/components/ui/card';
+
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+
 import {
     closestCenter,
     DndContext,
@@ -19,7 +29,7 @@ import {
     SortableContext, useSortable, verticalListSortingStrategy
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Plus } from 'lucide-react';
+import { EllipsisVertical, Plus } from 'lucide-react';
 import { useState } from 'react';
 
 interface Question {
@@ -79,7 +89,16 @@ function SortableItem(props: { id: string; question: Question }) {
                         {props.question.text}
                     </CardTitle>
 
-                    <Badge>{props.question.theme}</Badge>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger><EllipsisVertical /></DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <DropdownMenuLabel>Opções</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem className='cursor-pointer'>Editar</DropdownMenuItem>
+                            <DropdownMenuItem className='bg-red-500 text-white cursor-pointer' onClick={() => []}>Deletar</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+
                 </CardHeader>
                 <div className="p-4 space-y-2">
 

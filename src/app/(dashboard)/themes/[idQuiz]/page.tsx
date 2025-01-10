@@ -10,6 +10,7 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import { Plus } from 'lucide-react';
+import Link from 'next/link';
 
 export default function TestsList() {
     return (
@@ -50,9 +51,11 @@ export default function TestsList() {
                             </TableCell>
                             <TableCell>2 days ago</TableCell>
                             <TableCell className="text-right">
-                                <Button variant="ghost" size="sm">
-                                    Edit
-                                </Button>
+                                <Link href="/themes/1/1">
+                                    <Button variant="ghost" size="sm">
+                                        Edit
+                                    </Button>
+                                </Link>
                             </TableCell>
                         </TableRow>
                         <TableRow>
